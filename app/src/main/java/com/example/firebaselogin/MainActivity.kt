@@ -1,5 +1,6 @@
 package com.example.firebaselogin
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -24,16 +25,8 @@ class MainActivity : AppCompatActivity() {
         val login = findViewById<Button>(R.id.login)
 
         join.setOnClickListener {
-            val email = findViewById<EditText>(R.id.email)
-            val password = findViewById<EditText>(R.id.password)
-            auth.createUserWithEmailAndPassword(email.text.toString(), password.text.toString())
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(this, "회원가입 완료", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(this, "회원가입 실패", Toast.LENGTH_LONG).show()
-                    }
-                }
+            var intent = Intent(applicationContext,Register::class.java)
+            startActivity(intent)
         }
 
         login.setOnClickListener {
@@ -47,11 +40,6 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "로그인 실패", Toast.LENGTH_LONG).show()
                     }
                 }
-        }
-        val logout = findViewById<Button>(R.id.logout)
-        logout.setOnClickListener {
-            Firebase.auth.signOut()
-            Toast.makeText(this, "로그아웃 완료", Toast.LENGTH_LONG).show()
         }
     }
 }
