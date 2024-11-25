@@ -36,6 +36,8 @@ class MainActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, "로그인 완료", Toast.LENGTH_LONG).show()
+                        var intent = Intent(applicationContext,MainScreen::class.java)
+                        startActivity(intent)
                     } else {
                         Toast.makeText(this, "로그인 실패", Toast.LENGTH_LONG).show()
                     }
