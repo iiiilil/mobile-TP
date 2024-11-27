@@ -38,7 +38,7 @@ class NotificationActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 // 뒤로가기 버튼 클릭 시 MainActivity로 이동
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, MainScreen::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP // MainActivity로 돌아가기
                 startActivity(intent)
                 finish() // 현재 Activity 종료

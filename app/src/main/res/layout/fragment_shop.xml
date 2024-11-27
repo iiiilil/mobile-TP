@@ -3,15 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
-    <!-- 쇼핑 화면에 들어갈 UI 요소들 -->
-    <TextView
-        android:id="@+id/shop_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Shop Fragment"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="18sp"/>
+    <!-- GridView 사용 -->
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:padding="10dp"
+        android:columnWidth="80dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
