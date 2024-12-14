@@ -12,19 +12,27 @@
         android:textSize="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/uname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="username"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="170dp" />
+
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="170dp"
+        android:layout_margin="20dp"
         android:hint="email" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginHorizontal="20dp"
         android:hint="password"
         android:inputType="textPassword" />
 
@@ -32,7 +40,7 @@
         android:id="@+id/passagain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
+        android:layout_margin="20dp"
         android:hint="check passward"
         android:inputType="textPassword" />
     <Button

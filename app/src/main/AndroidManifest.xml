@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package = "com.Refee.RefeeDB">
 
     <application
         android:allowBackup="true"
@@ -14,13 +15,15 @@
         tools:targetApi="31">
         <activity
             android:name=".MyGridAdapter"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".NotificationActivity"
             android:exported="false" />
         <activity
-            android:name=".AppFragment"
-            android:exported="false" />
+            android:name=".AppsFragment"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".MainScreen"
             android:exported="false" />

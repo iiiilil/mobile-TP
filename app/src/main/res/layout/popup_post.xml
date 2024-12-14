@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp"
+    android:layout_gravity="center">
+
+    <!-- 닫기 버튼 -->
+    <ImageButton
+        android:id="@+id/btn_close_profile"
+        android:layout_width="80px"
+        android:layout_height="80px"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="-4dp"
+        android:background="?attr/selectableItemBackgroundBorderless" />
+
+    <!-- 제목 입력 -->
+    <EditText
+        android:id="@+id/title_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:textSize="20sp"
+        android:hint="제목 입력"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentTop="true" />
+
+    <!-- 스크롤 가능한 본문 영역 -->
+    <ScrollView
+        android:id="@+id/body_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/title_input"
+        android:layout_above="@id/btn_container"
+        android:fillViewport="true">
+
+        <EditText
+            android:id="@+id/body_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:hint="본문 입력"
+            android:minLines="5"
+            android:gravity="top"
+            android:scrollbars="vertical"
+            android:background="@android:drawable/edit_text" />
+    </ScrollView>
+
+    <!-- 팝업 내용 -->
+    <TextView
+        android:id="@+id/popup_content_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="18sp"
+        android:gravity="center" />
+
+    <!-- 버튼 영역 -->
+    <LinearLayout
+        android:id="@+id/btn_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="8dp">
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="저장" />
+
+        <Button
+            android:id="@+id/btn_post_popup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="게시" />
+    </LinearLayout>
+
+</RelativeLayout>

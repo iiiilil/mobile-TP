@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "319025672667",
-    "project_id": "fir-login-cb4f0",
-    "storage_bucket": "fir-login-cb4f0.firebasestorage.app"
+    "project_number": "772797074206",
+    "project_id": "refeedb",
+    "storage_bucket": "refeedb.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:319025672667:android:8c0d907224d8b306bc37fe",
+        "mobilesdk_app_id": "1:772797074206:android:f77fcaf97f6a4f8923970f",
         "android_client_info": {
-          "package_name": "com.example.firebaselogin"
+          "package_name": "com.Refee.RefeeDB"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCEp9eipvxklkGw7ZoRcdkTCr56lJKEF3k"
+          "current_key": "AIzaSyDEr38idr5JYJAwScVWxCRDm1C1_5xCKdM"
         }
       ],
       "services": {
