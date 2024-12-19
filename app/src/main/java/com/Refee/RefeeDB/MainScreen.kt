@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 
 class MainScreen : AppCompatActivity() {
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +66,7 @@ class MainScreen : AppCompatActivity() {
     }
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.main_framelayout, fragment)  // main_framelayout에 Fragment 전환
+        transaction.replace(R.id.fragment_container, fragment)  // main_framelayout에 Fragment 전환
         transaction.commit()
     }
 }

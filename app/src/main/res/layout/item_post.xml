@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 제목 -->
+        <TextView
+            android:id="@+id/post_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:textSize="30sp"
+            android:text="Post Title"
+            android:paddingBottom="8dp"/>
+
+        <!-- 구분선 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- 본문 -->
+        <TextView
+            android:id="@+id/post_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:paddingTop="4dp"
+            android:text="Post Body"/>
+
+        <!-- 버튼 레이아웃 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="end">
+
+            <!-- 좋아요 버튼 -->
+            <!--            <ImageButton-->
+            <!--                android:id="@+id/btn_like"-->
+            <!--                android:layout_width="40dp"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:src="@drawable/ic_likeit"-->
+            <!--                android:contentDescription="Like Button"-->
+            <!--                android:background="?attr/selectableItemBackgroundBorderless"-->
+            <!--                android:padding="8dp"/>-->
+
+            <!--            &lt;!&ndash; 댓글 버튼 &ndash;&gt;-->
+            <!--            <ImageButton-->
+            <!--                android:id="@+id/btn_reply"-->
+            <!--                android:layout_width="40dp"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:src="@drawable/ic_comment"-->
+            <!--                android:contentDescription="Reply Button"-->
+            <!--                android:background="?attr/selectableItemBackgroundBorderless"-->
+            <!--                android:padding="8dp"-->
+            <!--                android:layout_marginStart="8dp"/>-->
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
