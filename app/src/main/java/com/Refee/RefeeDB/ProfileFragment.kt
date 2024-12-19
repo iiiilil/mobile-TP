@@ -2,12 +2,10 @@ package com.Refee.RefeeDB
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -18,78 +16,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private var postDialog: Dialog? = null // popup_post 팝업 참조
 
-    private lateinit var ivProfilePicture: ImageView
-    private lateinit var tvUserName: TextView
-    private lateinit var btnEditProfile: Button
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        // findViewById 호출 전에 뷰가 올바르게 초기화되었는지 확인
-        val profileImage = view.findViewById<ImageView>(R.id.profile_image)
-        // 해당 뷰가 null이 아니어야 합니다
-        if (profileImage != null) {
-            // profileImage를 사용하는 코드
-        } else {
-            Log.e("ProfileFragment", "profile_image not found!")
-        }
-
-        // 뷰 초기화
-        ivProfilePicture = view.findViewById(R.id.ivProfilePicture)
-        tvUserName = view.findViewById(R.id.username_text)
-        btnEditProfile = view.findViewById(R.id.btn_edit_profile)
-
-        // Firestore에서 사용자 데이터 불러오기
-        loadUserProfile()
-
-        // Edit Profile 버튼 클릭 리스너 설정
-        btnEditProfile.setOnClickListener {
-            loadFragment(EditProfileFragment())
-        }
-    }
-
-    private fun loadUserProfile() {
-        val userId = auth.currentUser?.uid
-        if (userId == null) {
-            Toast.makeText(requireContext(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        firestore.collection("users").document(userId)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    val name = document.getString("name")
-                    val imageUrl = document.getString("imageUrl")
-
-                    // 이름 설정
-                    tvUserName.text = name ?: "사용자 이름 없음"
-
-                    // 프로필 이미지 설정
-                    if (!imageUrl.isNullOrEmpty()) {
-                        Glide.with(this)
-                            .load(imageUrl)
-                            .placeholder(R.drawable.profile_image_background) // 기본 이미지
-                            .into(ivProfilePicture)
-                    } else {
-                        ivProfilePicture.setImageResource(R.drawable.profile_image_background)
-                    }
-                }
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(requireContext(), "프로필 불러오기 실패: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
-
         // Post 버튼 클릭 리스너 설정
-        val postButton: Button = requireView().findViewById(R.id.btn_post)
+        val postButton: Button = view.findViewById(R.id.btn_post)
         postButton.setOnClickListener {
             showCustomPopup()
         }
 
         // Edit Profile 버튼 클릭 리스너 설정
-        val editProfileButton: Button? = view?.findViewById(R.id.btn_edit_profile)
-        editProfileButton?.setOnClickListener {
+        val editProfileButton: Button = view.findViewById(R.id.btn_edit_profile)
+        editProfileButton.setOnClickListener {
             loadFragment(EditProfileFragment()) // EditProfileFragment 로드
         }
     }
