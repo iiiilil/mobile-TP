@@ -7,18 +7,24 @@
     android:orientation="vertical"
     tools:context=".Register">
 
-    <TextView
-        android:text = "REFEE"
-        android:textSize="40dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <!--    <ImageView-->
+    <!--        android:layout_width="100dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_margin="5dp"-->
+    <!--        android:src="@drawable/ic_refee"/>-->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="111dp"
+        android:layout_marginTop="120dp"
+        android:src="@drawable/ic_refee" />
 
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="50dp"
         android:hint="email" />
 
     <EditText
@@ -41,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:background="#87CEEB"
+        android:background="@drawable/button1"
         android:text="가입하기"
         android:textSize="20dp"
         android:textColor="#000000"

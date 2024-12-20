@@ -42,18 +42,22 @@
         app:layout_constraintStart_toEndOf="@id/profile_image">
 
         <Button
-            android:layout_marginStart="16dp"
             android:id="@+id/btn_edit_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/button1"
             android:text="프로필 편집"
-            android:layout_marginEnd="8dp" />
+            android:textSize="10sp" />
 
         <Button
             android:id="@+id/btn_view_stories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="내 아이템 보기" />
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:background="@drawable/button1"
+            android:text="내 아이템"
+            android:textSize="11sp" />
 
     </LinearLayout>
 
@@ -144,9 +148,11 @@
     <!-- Post 버튼 -->
     <Button
         android:id="@+id/btn_post"
-        android:layout_width="wrap_content"
+        android:background="@drawable/button1"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:text="Post"
+        android:textSize="15dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
