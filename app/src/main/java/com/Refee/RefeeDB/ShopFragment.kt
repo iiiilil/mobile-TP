@@ -9,12 +9,18 @@ import androidx.fragment.app.Fragment
 
 class ShopFragment : Fragment(R.layout.fragment_shop) {
     @SuppressLint("MissingInflatedId")
-    // 추가적인 동작이나 UI 설정이 필요하면 onViewCreated나 다른 메서드를 사용합니다.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // DataStore에서 point 값을 가져오기
+        val point = DataStore.point  // DataStore에서 저장된 point 값을 가져옵니다
+
         val gridView: GridView = view.findViewById(R.id.gridView)
-        val gAdapter = MyGridAdapter(requireContext())
+
+        // MyGridAdapter에 point 값을 전달하여 생성
+        val gAdapter = MyGridAdapter(requireContext(), point)
+
+        // GridView에 어댑터 설정
         gridView.adapter = gAdapter
     }
-
 }

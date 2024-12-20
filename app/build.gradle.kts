@@ -14,6 +14,8 @@ dependencies {
     implementation ("com.google.firebase:firebase-firestore:24.7.0")
     implementation("com.github.bumptech.glide:glide:4.15.1")
     implementation(libs.androidx.material3.android)
+    implementation(libs.firebase.database.ktx)
+    implementation(libs.androidx.databinding.runtime)
     kapt("com.github.bumptech.glide:compiler:4.15.1")
 
     implementation(libs.androidx.ui.android)

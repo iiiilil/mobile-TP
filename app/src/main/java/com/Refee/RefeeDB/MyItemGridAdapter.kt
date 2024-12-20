@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.Refee.RefeeDB.DataStore
 
 class MyItemGridAdapter(private val context: Context) : BaseAdapter() {
 
@@ -21,9 +22,6 @@ class MyItemGridAdapter(private val context: Context) : BaseAdapter() {
         "기본 편지", "빨간 편지", "주황 편지", "초록 편지", "파랑 편지", "보라 편지",
         "노랑 편지", "회색 편지", "은색 편지", "금색 편지", "꽃무니 편지"
     )
-
-    // 각 아이템의 개수를 0으로 초기화
-    private val itemCounts = IntArray(imageList.size) { 0 }
 
     override fun getCount(): Int {
         return imageList.size
@@ -40,21 +38,17 @@ class MyItemGridAdapter(private val context: Context) : BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = convertView
         if (view == null) {
-            // view가 없으면 새로 생성
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             view = inflater.inflate(R.layout.grid_item, parent, false)
         }
 
-        // 이미지와 텍스트 설정
         val imageView: ImageView = view!!.findViewById(R.id.gridImage)
         val textView: TextView = view.findViewById(R.id.gridText)
-        val itemCountView: TextView = view.findViewById(R.id.saleprice) // 기존 saleprice를 아이템 개수로 사용
+        val itemCountView: TextView = view.findViewById(R.id.saleprice)
 
-        imageView.setImageResource(imageList[position])  // 이미지 설정
-        textView.text = textList[position]               // 텍스트 설정
-        itemCountView.text = "${itemCounts[position]}개"  // 아이템 개수 표시
-
-        // 클릭 이벤트 제거
+        imageView.setImageResource(imageList[position])
+        textView.text = textList[position]
+        itemCountView.text = "${DataStore.letterPaperCounts[position]}개"  // 전역 데이터 사용
 
         return view
     }
