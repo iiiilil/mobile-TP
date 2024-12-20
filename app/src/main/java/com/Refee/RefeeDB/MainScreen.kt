@@ -35,7 +35,7 @@ class MainScreen : AppCompatActivity() {
                     true
                 }
                 R.id.apps -> {
-                    loadFragment(AppsFragment())
+                    loadFragment(AppsFragment())  // AppsFragment 로딩
                     true
                 }
                 else -> false
@@ -46,6 +46,7 @@ class MainScreen : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.main_toolbar)
         setSupportActionBar(toolbar)
     }
+
     // 메뉴 로드
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar, menu)
@@ -64,6 +65,7 @@ class MainScreen : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)  // main_framelayout에 Fragment 전환

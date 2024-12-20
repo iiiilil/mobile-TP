@@ -1,5 +1,6 @@
 package com.Refee.RefeeDB
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -19,7 +20,13 @@ class AppsFragment : Fragment(R.layout.fragment_apps) {
 
         // RecyclerView 설정
         recyclerView = view.findViewById(R.id.recycler_view_posts)
-        adapter = PostAdapter(posts)
+        adapter = PostAdapter(posts) { post ->
+            // 포스트 클릭 시 메시지 보내는 액티비티로 이동
+            val intent = Intent(requireContext(), SendMessage::class.java)
+            intent.putExtra("postId", post.id)
+            intent.putExtra("postTitle", post.title)
+            startActivity(intent)
+        }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
