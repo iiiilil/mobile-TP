@@ -21,6 +21,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     private lateinit var etName: EditText
     private lateinit var btnChangePicture: Button
     private lateinit var btnSave: Button
+    private lateinit var btnCancel: Button
 
     private var selectedImageUri: Uri? = null
 
@@ -64,6 +65,12 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 saveProfile(name, selectedImageUri)
             }
         }
+        // 취소 버튼 클릭 리스너
+        btnCancel = view.findViewById(R.id.btnCancel)
+        btnCancel.setOnClickListener {
+            navigateToProfileFragment()
+        }
+
     }
     private fun loadProfileData() {
         val userId = auth.currentUser?.uid

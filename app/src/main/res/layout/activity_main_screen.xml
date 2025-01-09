@@ -25,7 +25,7 @@
             android:id="@+id/toolbar_logo"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_refee" />
+            android:src="@drawable/ic_plant" />
     </androidx.appcompat.widget.Toolbar>
 
     <!-- 구분선 -->
@@ -53,6 +53,7 @@
         android:id="@+id/main_bottomnavgation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#B3C89E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

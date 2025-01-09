@@ -31,7 +31,7 @@ class MainScreen : AppCompatActivity() {
                     true
                 }
                 R.id.shop -> {
-                    loadFragment(ShopFragment())
+                    loadFragment(StatusFragment())
                     true
                 }
                 R.id.apps -> {

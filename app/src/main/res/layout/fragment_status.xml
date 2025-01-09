@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"/>
+
+    <TextView
+        android:id="@+id/hum"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:text="습도:"
+        android:layout_gravity="center"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/light"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:text="광량:"
+        android:layout_gravity="center"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        />
+
+</LinearLayout>
+

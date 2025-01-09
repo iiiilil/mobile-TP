@@ -7,24 +7,21 @@
     android:orientation="vertical"
     tools:context=".Register">
 
-    <!--    <ImageView-->
-    <!--        android:layout_width="100dp"-->
-    <!--        android:layout_height="50dp"-->
-    <!--        android:layout_margin="5dp"-->
-    <!--        android:src="@drawable/ic_refee"/>-->
+
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="111dp"
         android:layout_marginTop="120dp"
-        android:src="@drawable/ic_refee" />
+        android:src="@drawable/ic_plant" />
 
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="70dp"
+        android:fontFamily="@font/font"
         android:hint="email" />
 
     <EditText
@@ -33,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:hint="password"
+        android:fontFamily="@font/font"
         android:inputType="textPassword" />
 
     <EditText
@@ -41,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:hint="check passward"
+        android:fontFamily="@font/font"
         android:inputType="textPassword" />
     <Button
         android:id="@+id/registerB"
@@ -48,8 +47,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:background="@drawable/button1"
-        android:text="가입하기"
+        android:text="가입"
         android:textSize="20dp"
+        android:fontFamily="@font/font"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </LinearLayout>

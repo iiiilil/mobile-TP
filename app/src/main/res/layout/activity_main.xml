@@ -9,24 +9,29 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:layout_marginTop="120dp"
-        android:src="@drawable/ic_refee" />
+        android:src="@drawable/ic_plant" />
+
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="51dp"
         android:layout_gravity="center"
-        android:text="Refresh Feeling"
-        android:textStyle="italic"
-        android:textColor="#424242"
-        android:textSize="23dp"
-        android:layout_margin="2dp"/>
+        android:layout_margin="2dp"
+        android:fontFamily="@font/font"
+        android:text="식물자동급수"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="50dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/font"
         android:hint="email" />
 
     <EditText
@@ -35,11 +40,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:hint="password"
+        android:textStyle="bold"
+        android:fontFamily="@font/font"
         android:inputType="textPassword" />
 
     <Button
         android:id="@+id/join"
-        android:layout_width="111dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginRight="20dp"
@@ -47,7 +54,9 @@
         android:shadowColor="#F9F7EA"
         android:text="회원가입"
         android:textColor="#000000"
-        android:textSize="15sp"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/font"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <Button
@@ -58,7 +67,9 @@
         android:layout_margin="20dp"
         android:background="@drawable/button1"
         android:textColor="#000000"
-        android:textSize="20sp"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/font"
         app:layout_constraintBottom_toBottomOf="parent"
         android:shadowColor="#F9F7EA" />
 </LinearLayout>

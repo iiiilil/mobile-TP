@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:textSize="30sp"
+                android:textSize="40sp"
                 android:text="게시물 제목"
                 android:paddingBottom="8dp"/>
 
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="22sp"
                 android:paddingTop="4dp"
                 android:text="게시물 본문"/>
 
@@ -70,7 +70,8 @@
         android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        />
 
     <!-- 댓글을 입력할 EditText -->
     <EditText
@@ -88,5 +89,6 @@
         android:padding="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:text="게시" />
 </LinearLayout>
