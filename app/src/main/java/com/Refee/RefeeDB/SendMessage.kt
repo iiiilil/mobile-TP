@@ -1,12 +1,15 @@
 package com.Refee.RefeeDB
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -31,6 +34,23 @@ class SendMessage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_send_message)
+
+        // Toolbar 설정 (뒤로가기 버튼과 "알림" 텍스트)
+        val toolbar = findViewById<Toolbar>(R.id.post_toolbar)
+        setSupportActionBar(toolbar)
+
+        // 뒤로가기 버튼 활성화
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // 프로젝트 이름과 ic_refee 아이콘을 제거
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setIcon(null)  // 아이콘 제거
+
+        // "알림" 텍스트 설정
+        toolbar.title = "게시글"
+
+        // 알림 내역
+
 
         // Intent로 받은 데이터
         postId = intent.getStringExtra("postId") ?: ""
@@ -69,6 +89,20 @@ class SendMessage : AppCompatActivity() {
             // 댓글 저장
             postComment(message)
         }
+    }
+    // 뒤로가기 버튼 클릭 시 MainActivity로 이동
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                // 뒤로가기 버튼 클릭 시 MainActivity로 이동
+                val intent = Intent(this, MainScreen::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP // MainActivity로 돌아가기
+                startActivity(intent)
+                finish() // 현재 Activity 종료
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // 댓글을 Firestore의 새 컬렉션 `comments`에 저장하는 메서드

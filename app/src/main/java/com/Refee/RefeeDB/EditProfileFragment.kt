@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -46,6 +47,9 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         btnChangePicture = view.findViewById(R.id.btnChangePicture)
         btnSave = view.findViewById(R.id.btnSave)
 
+        // Firestore에서 프로필 데이터 불러오기
+        loadProfileData()
+
         // 사진 변경 버튼 클릭 리스너
         btnChangePicture.setOnClickListener {
             selectImageLauncher.launch("image/*") // 이미지 파일 선택
@@ -60,6 +64,37 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 saveProfile(name, selectedImageUri)
             }
         }
+    }
+    private fun loadProfileData() {
+        val userId = auth.currentUser?.uid
+        if (userId == null) {
+            Toast.makeText(requireContext(), "You need to be logged in.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Firestore에서 사용자 프로필 데이터 가져오기
+        firestore.collection("users").document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val name = document.getString("name") ?: ""
+                    val imageUrl = document.getString("imageUrl")
+
+                    // 이름 업데이트
+                    etName.setText(name)
+
+                    // 이미지 업데이트
+                    if (!imageUrl.isNullOrEmpty()) {
+                        // Glide 또는 Picasso로 이미지 로드
+                        Glide.with(this).load(imageUrl).into(ivProfilePicture)
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "No profile data found.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(requireContext(), "Failed to load profile: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun saveProfile(name: String, imageUri: Uri?) {
@@ -88,19 +123,38 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     }
 
     private fun saveToFirestore(userId: String, name: String, imageUrl: String?) {
-        val userProfile = hashMapOf(
-            "name" to name,
-            "imageUrl" to imageUrl,
-            "timestamp" to System.currentTimeMillis()
-        )
+        val userRef = firestore.collection("users").document(userId)
 
-        firestore.collection("users").document(userId)
-            .set(userProfile)
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Profile updated successfully.", Toast.LENGTH_SHORT).show()
+        userRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                // 기존 imageUrl 값을 유지
+                val currentImageUrl = document.getString("imageUrl")
+
+                val userProfile = hashMapOf(
+                    "name" to name,
+                    "imageUrl" to (imageUrl ?: currentImageUrl), // 새 이미지가 없으면 기존 이미지 URL 유지
+                    "timestamp" to System.currentTimeMillis()
+                )
+
+                userRef.set(userProfile)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Profile updated successfully.", Toast.LENGTH_SHORT).show()
+                        navigateToProfileFragment() // ProfileFragment로 이동
+                    }
+                    .addOnFailureListener { exception ->
+                        Toast.makeText(requireContext(), "Failed to save profile: ${exception.message}", Toast.LENGTH_SHORT).show()
+                    }
             }
-            .addOnFailureListener { exception ->
-                Toast.makeText(requireContext(), "Failed to save profile: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(requireContext(), "Failed to fetch profile: ${exception.message}", Toast.LENGTH_SHORT).show()
+        }
     }
+    private fun navigateToProfileFragment() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, ProfileFragment()) // R.id.fragmentContainer는 Fragment를 표시하는 컨테이너 ID
+            .addToBackStack(null) // 필요한 경우 뒤로가기 스택 추가
+            .commit()
+    }
+
+
 }

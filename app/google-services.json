@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "772797074206",
+    "firebase_url": "https://refeedb-default-rtdb.firebaseio.com",
     "project_id": "refeedb",
     "storage_bucket": "refeedb.firebasestorage.app"
   },
@@ -10,6 +11,63 @@
         "mobilesdk_app_id": "1:772797074206:android:f77fcaf97f6a4f8923970f",
         "android_client_info": {
           "package_name": "com.Refee.RefeeDB"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEr38idr5JYJAwScVWxCRDm1C1_5xCKdM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772797074206:android:2049006a0ed0136b23970f",
+        "android_client_info": {
+          "package_name": "kr.ac.kpu.mychat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEr38idr5JYJAwScVWxCRDm1C1_5xCKdM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772797074206:android:4d3ddbdb4eba064623970f",
+        "android_client_info": {
+          "package_name": "kr.ac.kpu.upload_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEr38idr5JYJAwScVWxCRDm1C1_5xCKdM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772797074206:android:fd24f290e372666623970f",
+        "android_client_info": {
+          "package_name": "kr.ac.kpu.uploading_pj"
         }
       },
       "oauth_client": [],

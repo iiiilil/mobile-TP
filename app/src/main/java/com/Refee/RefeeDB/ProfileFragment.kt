@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -18,6 +19,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        fetchProfileData()
 
         // Post 버튼 클릭 리스너 설정
         val postButton: Button = view.findViewById(R.id.btn_post)
@@ -152,5 +155,36 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         transaction.replace(R.id.fragment_container, fragment)
         transaction.addToBackStack(null) // 뒤로 가기 지원
         transaction.commit()
+    }
+
+    private fun fetchProfileData() {
+        val userId = auth.currentUser?.uid ?: return
+
+        firestore.collection("users").document(userId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to load profile: ${error.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    val name = snapshot.getString("name") ?: "Unknown"
+                    val imageUrl = snapshot.getString("imageUrl")
+
+                    // UI 업데이트
+                    view?.findViewById<TextView>(R.id.username_text)?.text = name
+                    val profileImage = view?.findViewById<ImageView>(R.id.profile_image)
+                    if (imageUrl != null) {
+                        // Glide 또는 Picasso로 이미지 로드
+                        if (profileImage != null) {
+                            Glide.with(this).load(imageUrl).into(profileImage)
+                        }
+                    }
+                }
+            }
     }
 }
