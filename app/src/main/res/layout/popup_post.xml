@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -27,44 +25,37 @@
         android:layout_marginTop="16dp"
         android:layout_alignParentTop="true" />
 
-    <!-- 스크롤 가능한 본문 영역 -->
-    <ScrollView
-        android:id="@+id/body_scroll"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_below="@id/title_input"
-        android:layout_above="@id/btn_container"
-        android:fillViewport="true">
-
-        <EditText
-            android:id="@+id/body_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:hint="본문 입력"
-            android:minLines="5"
-            android:gravity="top"
-            android:scrollbars="vertical"
-            android:background="@android:drawable/edit_text" />
-
-    </ScrollView>
-
-    <!-- 팝업 내용 -->
-    <TextView
-        android:id="@+id/popup_content_profile"
+    <!-- 사진 추가 버튼 -->
+    <Button
+        android:id="@+id/add_photo_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="18sp"
-        android:gravity="center" />
+        android:layout_below="@id/title_input"
+        android:text="사진 추가"
+        android:layout_marginTop="16dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <!-- 이미지 미리보기 -->
+    <ImageView
+        android:id="@+id/image_preview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/add_photo_button"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        android:scaleType="centerCrop"/>
+
+    <!-- 본문 입력 -->
+    <EditText
+        android:id="@+id/body_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/body_scroll"
-        android:layout_above="@id/btn_container"
-        android:padding="16dp" />
+        android:textSize="18sp"
+        android:hint="본문 입력"
+        android:minLines="5"
+        android:gravity="top"
+        android:scrollbars="vertical"
+        android:background="@android:drawable/edit_text"
+        android:layout_below="@id/image_preview"/>
 
     <!-- 버튼 영역 -->
     <LinearLayout
@@ -77,30 +68,15 @@
         android:paddingTop="8dp">
 
         <Button
-            android:id="@+id/addPhotoButton"
-            android:background="@drawable/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text="사진 추가" />
-
-        <Button
             android:id="@+id/btn_post_popup"
-            android:background="@drawable/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
             android:text="게시" />
 
         <Button
             android:id="@+id/btn_save"
-            android:background="@drawable/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:text="취소" />
-
-
     </LinearLayout>
-
 </RelativeLayout>

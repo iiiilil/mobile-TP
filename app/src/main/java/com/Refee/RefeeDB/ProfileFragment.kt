@@ -1,21 +1,41 @@
 package com.Refee.RefeeDB
 
 import android.app.Dialog
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import java.util.*
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private val firestore: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val storage: FirebaseStorage by lazy { FirebaseStorage.getInstance() }
 
     private var postDialog: Dialog? = null // popup_post 팝업 참조
+    private var selectedImageUri: Uri? = null
+
+    // 사진 선택 콜백
+    private val selectImageLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            selectedImageUri = it
+            val imagePreview = postDialog?.findViewById<ImageView>(R.id.image_preview)
+            imagePreview?.visibility = View.VISIBLE
+            if (imagePreview != null) {
+                Glide.with(this).load(it).into(imagePreview)
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,9 +53,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         editProfileButton.setOnClickListener {
             loadFragment(EditProfileFragment()) // EditProfileFragment 로드
         }
+
         val viewStoriesButton: Button = view.findViewById(R.id.btn_view_stories)
         viewStoriesButton.setOnClickListener {
-            loadFragment(MyItemFragment()) // EditProfileFragment 로드
+            loadFragment(MyItemFragment()) // MyItemFragment 로드
         }
     }
 
@@ -58,23 +79,26 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val btnClose = postDialog?.findViewById<ImageButton>(R.id.btn_close_profile)
         val titleInput = postDialog?.findViewById<EditText>(R.id.title_input)
         val bodyInput = postDialog?.findViewById<EditText>(R.id.body_input)
+        val imagePreview = postDialog?.findViewById<ImageView>(R.id.image_preview)
         val btnSave = postDialog?.findViewById<Button>(R.id.btn_save)
         val btnPost = postDialog?.findViewById<Button>(R.id.btn_post_popup)
+        val addPhotoButton = postDialog?.findViewById<Button>(R.id.add_photo_button)
 
         // 닫기 버튼 이벤트 처리
         btnClose?.setOnClickListener {
             postDialog?.dismiss()
         }
 
-        // 취소 버튼 이벤트 처리
-        btnSave?.setOnClickListener {
-            // 데이터 입력 없이 그냥 팝업 닫기
-            postDialog?.dismiss()  // 팝업 닫기
-
-            // 취소 처리에 대한 메시지를 출력하려면 (선택 사항)ㅓ
-            Toast.makeText(requireContext(), "작성이 취소되었습니다.", Toast.LENGTH_SHORT).show()
+        // 사진 추가 버튼 클릭 리스너
+        addPhotoButton?.setOnClickListener {
+            selectImageLauncher.launch("image/*") // 이미지 선택
         }
 
+        // 취소 버튼 이벤트 처리
+        btnSave?.setOnClickListener {
+            postDialog?.dismiss()
+            Toast.makeText(requireContext(), "작성이 취소되었습니다.", Toast.LENGTH_SHORT).show()
+        }
 
         // POST 버튼 이벤트 처리
         btnPost?.setOnClickListener {
@@ -86,9 +110,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 return@setOnClickListener
             }
 
-            // 확인 팝업 표시
-            showConfirmDialog("post") {
-                savePostToFirestore(title, body)
+            // 이미지가 선택되었으면 Firebase Storage에 업로드
+            if (selectedImageUri != null) {
+                uploadImageToFirebaseStorage(title, body)
+            } else {
+                savePostToFirestore(title, body, null)
             }
         }
 
@@ -96,18 +122,29 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         postDialog?.show()
     }
 
+    private fun uploadImageToFirebaseStorage(title: String, body: String) {
+        val userId = auth.currentUser?.uid ?: return
+        val storageReference = storage.reference.child("post_images/${userId}/${UUID.randomUUID()}.jpg")
 
-    private fun savePostToFirestore(title: String, body: String) {
-        val currentUserId = auth.currentUser?.uid
-        if (currentUserId == null) {
-            Toast.makeText(requireContext(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
-            return
-        }
+        storageReference.putFile(selectedImageUri!!)
+            .addOnSuccessListener {
+                storageReference.downloadUrl.addOnSuccessListener { uri ->
+                    savePostToFirestore(title, body, uri.toString())
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "이미지 업로드 실패", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun savePostToFirestore(title: String, body: String, imageUrl: String?) {
+        val currentUserId = auth.currentUser?.uid ?: return
 
         val post = hashMapOf(
             "title" to title,
             "body" to body,
             "userId" to currentUserId,
+            "imageUrl" to imageUrl,
             "timestamp" to System.currentTimeMillis()
         )
 
@@ -122,34 +159,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
     }
 
-    private fun showConfirmDialog(action: String, onYes: () -> Unit) {
-        val confirmDialog = Dialog(requireContext())
-        confirmDialog.setContentView(R.layout.popup_confirmation)
-        confirmDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-
-        val btnYes = confirmDialog.findViewById<Button>(R.id.btn_yes)
-        val btnNo = confirmDialog.findViewById<Button>(R.id.btn_no)
-        val messageTextView = confirmDialog.findViewById<TextView>(R.id.confirm_message)
-        
-
-        // YES 버튼 이벤트 처리
-        btnYes.setOnClickListener {
-            onYes() // YES 동작 수행
-            postDialog?.dismiss() // popup_post 팝업 닫기
-            confirmDialog.dismiss() // 확인 팝업 닫기
-        }
-
-        // NO 버튼 이벤트 처리
-        btnNo.setOnClickListener {
-            postDialog?.dismiss() // popup_post 팝업 닫기
-            confirmDialog.dismiss() // 확인 팝업 닫기
-        }
-
-        // 확인 팝업 띄우기
-        confirmDialog.show()
-    }
-
-    // Fragment를 교체하는 메서드
     private fun loadFragment(fragment: Fragment) {
         val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)

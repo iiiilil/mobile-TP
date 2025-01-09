@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,16 +12,33 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- 제목 -->
-        <TextView
-            android:id="@+id/post_title"
-            android:layout_width="wrap_content"
+        <!-- 제목과 아이콘을 가로로 배치하는 레이아웃 -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:textSize="40sp"
-            android:text="Post Title"
-            android:paddingBottom="8dp"/>
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical">
+
+            <!-- 제목 -->
+            <TextView
+                android:id="@+id/post_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:textSize="40sp"
+                android:text="Post Title"
+                android:paddingEnd="8dp"/>
+
+            <!-- 제목 옆에 표시할 아이콘 -->
+            <ImageView
+                android:id="@+id/ic_picture_whether"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_picture_whether"
+                android:visibility="gone"/>
+
+        </LinearLayout>
 
         <!-- 구분선 -->
         <View

@@ -6,5 +6,6 @@ data class Post(
     val title: String = "",
     val body: String = "",
     val userId: String = "",
-    val timestamp: Long = 0L
+    val timestamp: Long = 0L,
+    val imageUrl: String? = null
 )

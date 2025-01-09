@@ -18,6 +18,10 @@ dependencies {
     implementation(libs.androidx.databinding.runtime)
     kapt("com.github.bumptech.glide:compiler:4.15.1")
 
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+
+
     implementation(libs.androidx.ui.android)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

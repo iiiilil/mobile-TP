@@ -6,12 +6,14 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -24,6 +26,7 @@ class SendMessage : AppCompatActivity() {
     private lateinit var sendButton: Button
     private lateinit var textPostTitle: TextView  // 제목 표시용 TextView 추가
     private lateinit var textPostBody: TextView   // 본문 표시용 TextView 추가
+    private lateinit var postImageView: ImageView // 이미지 표시용 ImageView 추가
     private lateinit var recyclerView: RecyclerView
 
     private val firestore: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
@@ -49,9 +52,6 @@ class SendMessage : AppCompatActivity() {
         // "알림" 텍스트 설정
         toolbar.title = "게시글"
 
-        // 알림 내역
-
-
         // Intent로 받은 데이터
         postId = intent.getStringExtra("postId") ?: ""
         if (postId.isEmpty()) {
@@ -65,6 +65,7 @@ class SendMessage : AppCompatActivity() {
         sendButton = findViewById(R.id.btn_send)
         textPostTitle = findViewById(R.id.text_post_title)  // 제목 표시용 TextView 초기화
         textPostBody = findViewById(R.id.text_post_body)    // 본문 표시용 TextView 초기화
+        postImageView = findViewById(R.id.post_image)       // 이미지 표시용 ImageView 초기화
         recyclerView = findViewById(R.id.recycler_view_comments)
 
         // 제목과 본문 표시
@@ -76,8 +77,8 @@ class SendMessage : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = commentAdapter
 
-        // 댓글 가져오기
-        fetchComments()
+        // 게시글 데이터 가져오기
+        fetchPostData()
 
         sendButton.setOnClickListener {
             val message = messageInput.text.toString().trim()
@@ -90,6 +91,7 @@ class SendMessage : AppCompatActivity() {
             postComment(message)
         }
     }
+
     // 뒤로가기 버튼 클릭 시 MainActivity로 이동
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -103,6 +105,36 @@ class SendMessage : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    // 게시글 데이터 가져오기
+    private fun fetchPostData() {
+        firestore.collection("posts").document(postId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val post = document.toObject(Post::class.java)
+                    // 제목과 본문 설정
+                    post?.let {
+                        textPostTitle.text = it.title
+                        textPostBody.text = it.body
+
+                        // 이미지 URL이 없으면 ImageView 숨기기
+                        if (it.imageUrl.isNullOrEmpty()) {
+                            postImageView.visibility = ImageView.GONE
+                        } else {
+                            postImageView.visibility = ImageView.VISIBLE
+                            // 이미지 URL이 있으면 Glide로 이미지 로드
+                            Glide.with(this).load(it.imageUrl).into(postImageView)
+                        }
+                    }
+                } else {
+                    Log.e("SendMessage", "게시글을 찾을 수 없습니다.")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("SendMessage", "게시글 불러오기 실패: ${exception.message}")
+            }
     }
 
     // 댓글을 Firestore의 새 컬렉션 `comments`에 저장하는 메서드
@@ -136,7 +168,6 @@ class SendMessage : AppCompatActivity() {
         // Firestore에서 해당 게시물의 댓글만 가져오기
         firestore.collection("comments")
             .whereEqualTo("postId", postId)
-            //.orderBy("timestamp")
             .get()
             .addOnSuccessListener { result ->
                 if (result.isEmpty) {

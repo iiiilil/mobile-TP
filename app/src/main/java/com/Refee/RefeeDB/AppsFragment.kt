@@ -48,7 +48,8 @@ class AppsFragment : Fragment(R.layout.fragment_apps) {
                         title = document.getString("title") ?: "",
                         body = document.getString("body") ?: "",
                         userId = document.getString("userId") ?: "",
-                        timestamp = document.getLong("timestamp") ?: 0L
+                        timestamp = document.getLong("timestamp") ?: 0L,
+                        imageUrl = document.getString("imageUrl") // 이미지 URL 추가
                     )
                     posts.add(post)
                 }
@@ -56,7 +57,7 @@ class AppsFragment : Fragment(R.layout.fragment_apps) {
             }
             .addOnFailureListener {
                 // 에러 처리
-
             }
     }
 }
+
