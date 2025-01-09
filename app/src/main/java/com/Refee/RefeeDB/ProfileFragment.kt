@@ -63,32 +63,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             postDialog?.dismiss()
         }
 
-        // SAVE 버튼 이벤트 처리
+        // 취소 버튼 이벤트 처리
         btnSave?.setOnClickListener {
-            val title = titleInput?.text.toString().trim()
-            val body = bodyInput?.text.toString().trim()
+            // 데이터 입력 없이 그냥 팝업 닫기
+            postDialog?.dismiss()  // 팝업 닫기
 
-            if (title.isBlank() || body.isBlank()) {
-                Toast.makeText(requireContext(), "제목과 본문을 입력하세요.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val draft = hashMapOf(
-                "title" to title,
-                "body" to body,
-                "timestamp" to System.currentTimeMillis()
-            )
-
-            firestore.collection("drafts")
-                .add(draft)
-                .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "임시 저장 완료", Toast.LENGTH_SHORT).show()
-                    postDialog?.dismiss()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(requireContext(), "저장 실패: ${it.message}", Toast.LENGTH_SHORT).show()
-                }
+            // 취소 처리에 대한 메시지를 출력하려면 (선택 사항)ㅓ
+            Toast.makeText(requireContext(), "작성이 취소되었습니다.", Toast.LENGTH_SHORT).show()
         }
+
 
         // POST 버튼 이벤트 처리
         btnPost?.setOnClickListener {
@@ -144,7 +127,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val btnYes = confirmDialog.findViewById<Button>(R.id.btn_yes)
         val btnNo = confirmDialog.findViewById<Button>(R.id.btn_no)
         val messageTextView = confirmDialog.findViewById<TextView>(R.id.confirm_message)
-        messageTextView.text = "Are you sure you want to $action?"
+        
 
         // YES 버튼 이벤트 처리
         btnYes.setOnClickListener {

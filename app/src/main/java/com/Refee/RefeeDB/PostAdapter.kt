@@ -25,12 +25,17 @@ class PostAdapter(
 
     inner class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val titleTextView: TextView = itemView.findViewById(R.id.post_title)
+        private val bodyTextView: TextView = itemView.findViewById(R.id.post_body)  // 본문을 위한 TextView
 
         fun bind(post: Post) {
             titleTextView.text = post.title // 포스트의 제목을 표시
+            bodyTextView.text = post.body // 포스트의 본문을 표시 (여기서 본문을 바인딩)
+
             itemView.setOnClickListener {
-                onPostClick(post) // 클릭 시 메시지 보내는 화면으로 이동
+                // 여기서 클릭 시 postId를 포함한 post를 onPostClick으로 전달
+                onPostClick(post) // 클릭 시 게시글 자세히 보는 화면으로 이동
             }
         }
     }
 }
+

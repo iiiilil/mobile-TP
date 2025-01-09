@@ -25,6 +25,7 @@ class AppsFragment : Fragment(R.layout.fragment_apps) {
             val intent = Intent(requireContext(), SendMessage::class.java)
             intent.putExtra("postId", post.id)
             intent.putExtra("postTitle", post.title)
+            intent.putExtra("postBody", post.body)  // 게시글의 본문
             startActivity(intent)
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -41,13 +42,23 @@ class AppsFragment : Fragment(R.layout.fragment_apps) {
             .addOnSuccessListener { result ->
                 posts.clear()
                 for (document in result) {
-                    val post = document.toObject(Post::class.java)
+                    val post = Post(
+                        id = document.id,  // Firestore 문서의 고유 ID
+                        postId = document.getString("postId") ?: "",  // postId 필드가 없으면 빈 문자열로 설정
+                        title = document.getString("title") ?: "",
+                        body = document.getString("body") ?: "",
+                        userId = document.getString("userId") ?: "",
+                        timestamp = document.getLong("timestamp") ?: 0L
+                    )
                     posts.add(post)
                 }
                 adapter.notifyDataSetChanged()
             }
             .addOnFailureListener {
                 // 에러 처리
+
             }
     }
+
+
 }

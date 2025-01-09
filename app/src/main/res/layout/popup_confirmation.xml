@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Are you sure?"
+        android:text="정말 게시하시겠습니까?"
         android:textSize="18sp"
         android:textColor="@android:color/black" />
 
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="YES" />
+            android:text="예" />
 
         <Button
             android:id="@+id/btn_no"
@@ -41,6 +41,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="NO" />
+            android:text="아니요" />
     </LinearLayout>
 </RelativeLayout>

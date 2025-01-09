@@ -2,20 +2,73 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- 게시물 제목을 표시할 TextView -->
+    <TextView
+        android:id="@+id/text_post_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="게시물 제목"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp"
+        android:textColor="@android:color/black"/>
+
+    <!-- 구분선 -->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/main_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 게시물 본문을 표시할 TextView -->
+    <TextView
+        android:id="@+id/text_post_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="게시물 본문"
+        android:textSize="20sp"
+        android:paddingTop="4dp"
+        android:paddingBottom="16dp"
+        android:textColor="@android:color/black"/>
+
+    <!-- 구분선 -->
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/main_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 댓글 목록을 표시할 RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_comments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- 댓글을 입력할 EditText -->
     <EditText
         android:id="@+id/message_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="메시지를 입력하세요"
+        android:hint="댓글 추가..."
         android:inputType="text" />
 
+    <!-- 댓글을 게시하는 Button -->
     <Button
         android:id="@+id/btn_send"
         android:background="@drawable/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="전송" />
+        android:text="게시" />
 </LinearLayout>
