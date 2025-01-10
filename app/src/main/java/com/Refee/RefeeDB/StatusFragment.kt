@@ -1,6 +1,8 @@
 package com.Refee.RefeeDB
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -27,6 +29,9 @@ class StatusFragment : Fragment(R.layout.fragment_status) {
     // Firebase Storage 참조
     private lateinit var storage: FirebaseStorage
     private lateinit var storageRef: StorageReference
+
+    private val handler = Handler(Looper.getMainLooper())  // Handler 초기화
+    private lateinit var refreshRunnable: Runnable
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,7 +63,6 @@ class StatusFragment : Fragment(R.layout.fragment_status) {
                         initializeDatabaseListeners()
                     } else {
                         Log.w(TAG, "Authentication failed", task.exception)
-
                     }
                 }
         } else {
@@ -95,6 +99,20 @@ class StatusFragment : Fragment(R.layout.fragment_status) {
 
         // Firebase Storage에서 이미지 로드
         loadImageFromStorage()
+
+        // 이미지 주기적으로 갱신하는 Runnable 설정
+        refreshRunnable = object : Runnable {
+            override fun run() {
+                // Fragment가 현재 Context에 연결되어 있는지 확인
+                context?.let {
+                    loadImageFromStorage()  // 이미지를 갱신
+                    handler.postDelayed(this, 1000)  // 1초마다 갱신
+                }
+            }
+        }
+
+        // 1초마다 이미지 갱신 시작
+        handler.post(refreshRunnable)
     }
 
     private fun loadImageFromStorage() {
@@ -103,17 +121,26 @@ class StatusFragment : Fragment(R.layout.fragment_status) {
 
         // Glide로 이미지 로드
         imageRef.downloadUrl.addOnSuccessListener { uri ->
-            // 이미지 URL을 가져와 Glide로 로드
-            Glide.with(requireContext())
-                .load(uri)  // Firebase Storage에서 가져온 이미지 URL
-                .into(imageView)  // ImageView에 로드
+            // Fragment가 현재 Context에 연결되어 있는지 확인
+            context?.let {
+                // 이미지 URL을 가져와 Glide로 로드
+                Glide.with(it)
+                    .load(uri)  // Firebase Storage에서 가져온 이미지 URL
+                    .into(imageView)  // ImageView에 로드
 
-            imageUrlTextView.text = "이미지 URL: $uri"
-            Log.d(TAG, "Image URL is: $uri")
+                imageUrlTextView.text = "이미지 URL: $uri"
+                Log.d(TAG, "Image URL is: $uri")
+            }
         }.addOnFailureListener { exception ->
             Log.w(TAG, "Failed to load image from Firebase Storage.", exception)
             Toast.makeText(requireContext(), "이미지 로드 실패: ${exception.message}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Fragment가 더 이상 뷰와 연결되지 않을 때 handler를 제거
+        handler.removeCallbacks(refreshRunnable)
     }
 
     companion object {
