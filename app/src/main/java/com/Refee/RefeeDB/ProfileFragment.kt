@@ -54,10 +54,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             loadFragment(EditProfileFragment()) // EditProfileFragment 로드
         }
 
-        val viewStoriesButton: Button = view.findViewById(R.id.btn_view_stories)
-        viewStoriesButton.setOnClickListener {
-            loadFragment(MyItemFragment()) // MyItemFragment 로드
-        }
     }
 
     private fun showCustomPopup() {
