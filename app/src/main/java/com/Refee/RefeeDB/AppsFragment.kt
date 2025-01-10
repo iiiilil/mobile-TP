@@ -37,19 +37,19 @@ class AppsFragment : Fragment(R.layout.fragment_apps) {
 
     private fun fetchPosts() {
         firestore.collection("posts")
-            .orderBy("timestamp") // 시간순 정렬
+            .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING) // 최신순 정렬
             .get()
             .addOnSuccessListener { result ->
                 posts.clear()
                 for (document in result) {
                     val post = Post(
-                        id = document.id,  // Firestore 문서의 고유 ID
-                        postId = document.getString("postId") ?: "",  // postId 필드가 없으면 빈 문자열로 설정
+                        id = document.id,
+                        postId = document.getString("postId") ?: "",
                         title = document.getString("title") ?: "",
                         body = document.getString("body") ?: "",
                         userId = document.getString("userId") ?: "",
                         timestamp = document.getLong("timestamp") ?: 0L,
-                        imageUrl = document.getString("imageUrl") // 이미지 URL 추가
+                        imageUrl = document.getString("imageUrl")
                     )
                     posts.add(post)
                 }
